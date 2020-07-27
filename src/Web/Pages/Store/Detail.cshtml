@@ -1,0 +1,32 @@
+﻿@page
+
+@model Microsoft.eShopWeb.Web.Pages.Store.DetailModel
+@{
+    ViewData["Title"] = "Detail";
+}
+
+    <div>
+        <img class="esh-catalog-thumbnail" src="@Model.StoreModel.PictureUri" />
+        <a class="btn btn-sm btn-success" asp-page="/store/product" asp-route-id="@Model.StoreModel.SecondaryId" title="@Model.StoreModel.Name">Open Store Products</a>
+        <div class="esh-catalog-name">
+            <span>@Model.StoreModel.Name</span>
+        </div>
+        <div class="esh-catalog-name">
+            <span>@Model.StoreModel.ZipCode</span>
+        </div>
+        <div class="esh-catalog-name">
+            <span>@Model.StoreModel.City</span>
+        </div>
+        <div class="esh-catalog-name">
+            <span>@Model.StoreModel.Phone</span>
+        </div>
+        <div class="esh-catalog-name">
+            <span>@Model.StoreModel.Address</span>
+        </div>
+        <div class="esh-catalog-name">
+            <span>@Model.StoreModel.License</span>
+            <input type="hidden" asp-for="@Model.StoreModel.Id" name="id" />
+            <input type="hidden" asp-for="@Model.StoreModel.Name" name="name" />
+            <input type="hidden" asp-for="@Model.StoreModel.PictureUri" name="pictureUri" />
+        </div>
+    </div>

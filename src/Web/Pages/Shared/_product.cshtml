@@ -1,0 +1,60 @@
+﻿@model StoreProductItemViewModel
+@*
+    <form asp-page="/Basket/Index" method="post">
+        <img class="esh-catalog-thumbnail" src="@Model.PictureUri" />
+        <input class="esh-catalog-button" type="submit" value="ADD TO BASKET" />
+        <div class="esh-catalog-name">
+            <span>@Model.Name</span>
+        </div>
+        <div class="esh-catalog-price">
+            <span>@Model.Price.ToString("N2")</span>
+        </div>
+        <input type="hidden" asp-for="@Model.Id" name="id" />
+        <input type="hidden" asp-for="@Model.StoreId" name="storeId" />
+        <input type="hidden" asp-for="@Model.SecondaryId" name="secondaryId" />
+        <input type="hidden" asp-for="@Model.Name" name="name" />
+        <input type="hidden" asp-for="@Model.PictureUri" name="pictureUri" />
+        <input type="hidden" asp-for="@Model.Price" name="price" />
+        <input type="hidden" asp-for="@Model.Amount" name="amount" />
+    </form>
+*@
+
+    <form asp-page="/Basket/Index" method="post" class="product sf-@Model.Category clearfix" id="prdform-@Model.SecondaryId">
+        <!--
+    <div class="product sf-@Model.Category clearfix">
+        -->
+        <div class="product-image">
+            <div class="fslider" data-arrows="false">
+                <div class="flexslider">
+                    <div class="slider-wrap">
+                        <div class="slide"><a href="#"><img src="@Model.PictureUri" alt="@Model.Name"></a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="product-overlay">
+                <a class="add-to-cart" onclick="document.getElementById('prdform-@Model.SecondaryId').submit()"><i class="icon-shopping-cart"></i><span> Add to Cart</span></a>
+                <a href="include/ajax/shop-item.html" class="item-quick-view" data-lightbox="ajax"><i class="icon-zoom-in2"></i><span> Quick View</span></a>
+                <input type="hidden" asp-for="@Model.Id" name="id" />
+                <input type="hidden" asp-for="@Model.StoreId" name="storeId" />
+                <input type="hidden" asp-for="@Model.SecondaryId" name="secondaryId" />
+                <input type="hidden" asp-for="@Model.Name" name="name" />
+                <input type="hidden" asp-for="@Model.PictureUri" name="pictureUri" />
+                <input type="hidden" asp-for="@Model.Price" name="price" />
+                <input type="hidden" asp-for="@Model.Amount" name="amount" />
+            </div>
+        </div>
+        <div class="product-desc center">
+            <div class="product-title"><h3><a href="#">@Model.Name</a></h3></div>
+            <div class="product-price">@Model.Price.ToString("N2")</div>
+            <div class="product-rating">
+                <i class="icon-star3"></i>
+                <i class="icon-star3"></i>
+                <i class="icon-star3"></i>
+                <i class="icon-star-empty"></i>
+                <i class="icon-star-empty"></i>
+            </div>
+        </div>
+        <!--
+    </div>
+        -->
+    </form>

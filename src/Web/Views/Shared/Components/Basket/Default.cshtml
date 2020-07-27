@@ -1,0 +1,45 @@
+﻿@model BasketComponentViewModel
+
+@{ ViewData["Title"] = "My Basket"; }
+
+@*
+    <a class="esh-basketstatus" asp-page="/Basket/Index">
+            <div class="esh-basketstatus-image">
+                <img src="~/images/cart.png" />
+            </div>
+            <div class="esh-basketstatus-badge">
+                @Model.ItemsCount
+            </div>
+    </a>
+*@
+<!-- Top Cart
+                       ============================================= -->
+    <div id="top-cart">
+        <a href="#" id="top-cart-trigger"><i class="icon-shopping-cart"></i><span> @Model.ItemsCount</span></a>
+        @if (Model.Items.Any()){
+        <div class="top-cart-content">
+            <div class="top-cart-title">
+                <h4>Shopping Cart</h4>
+            </div>
+            @foreach (var item in Model.Items)
+            {
+    <div class="top-cart-items">
+        <div class="top-cart-item clearfix">
+            <div class="top-cart-item-image">
+                <a href="#"><img src="@item.PictureUrl" alt="@item.ProductName" /></a>
+            </div>
+            <div class="top-cart-item-desc">
+                <a href="#">Blue Round-Neck Tshirt</a>
+                <span class="top-cart-item-price">$@item.UnitPrice</span>
+                <span class="top-cart-item-quantity">x @item.Quantity</span>
+            </div>
+        </div>
+    </div>}
+
+            <div class="top-cart-action clearfix">
+                <span class="fleft top-checkout-price">$@Model.Total</span>
+                <a class="button button-3d button-small nomargin fright" asp-page="/basket/index">View Cart</a>
+            </div>
+        </div>
+        }
+    </div><!-- #top-cart end -->

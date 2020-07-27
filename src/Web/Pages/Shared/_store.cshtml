@@ -1,0 +1,109 @@
+﻿@model StoreItemViewModel
+
+   
+
+
+    <form asp-page="/Store/Index" class="col-lg-6 bottommargin">
+        <!--
+        <a class="btn btn-sm btn-success" asp-page="/store/product" asp-route-id="@Model.SecondaryId.ToString()" title="@Model.Name">Open Store</a>
+        <a class="btn btn-sm btn-danger float-right" asp-page="/store/detail" asp-route-id="@Model.Id.ToString()" title="@Model.Name">Store Detail</a>
+        <div class="esh-catalog-name">
+            <span>@Model.Name</span>
+        </div>
+        <div class="esh-catalog-name">
+            <span>@Model.City</span>
+        </div>
+        -->
+
+
+        <input type="hidden" asp-for="@Model.Id" name="id" />
+        <input type="hidden" asp-for="@Model.Name" name="name" />
+        <input type="hidden" asp-for="@Model.PictureUri" name="pictureUri" />
+
+        @*
+            <img class="esh-catalog-thumbnail" src="@Model.PictureUri" />
+            <div class="esh-catalog-name">
+                <span>@Model.Name</span>
+            </div>
+            <p class="card-text">@Model.City</p>
+            <a class="btn btn-success" asp-page="/store/product" asp-route-storeid="@Model.SecondaryId.ToString()" title="@Model.Name">Open Store</a>
+            <a class="btn btn-danger float-right" asp-page="/store/detail" asp-route-id="@Model.Id.ToString()" title="@Model.Name">Store Detail</a>
+            <p class="card-text"><small class="text-muted">License: @Model.License</small></p>
+        *@
+
+        @*
+            <div class="col-lg-6 bottommargin">*@
+
+        <div class="team team-list clearfix">
+            <div class="team-image">
+                <img src="@Model.PictureUri" alt="@Model.Name">
+            </div>
+            <div class="team-desc">
+                <div class="team-title"><h4>@Model.Name</h4><span>@Model.City</span><p class="card-text"><small class="text-muted">License: @Model.License</small></p></div>
+                <div class="team-content">
+                    @*
+        <p>@Model.Description</p>
+                    *@
+                    <p>
+                        Minimum order: $@Model.DeliveryZipCode.Select(x => x.MinOrder).Min() - $@Model.DeliveryZipCode.Select(x => x.MinOrder).Max() base on your location
+                    </p>
+                </div>
+                @*
+        <div class="team-list">
+            @foreach (var item in Model.DeliveryZipCode.Select(x => x.MinOrder).Distinct())
+            {
+                <span><small class="text-muted">@item</small></span>
+                @foreach (var i in Model.DeliveryZipCode.Where(x => x.MinOrder == item).Select(x => x.City).Distinct())
+                {
+                    <span><small class="text-muted">@i</small></span>
+                }
+            }
+        </div>
+                *@
+                @*
+        <a href="#" class="social-icon si-rounded si-small si-facebook">
+            <i class="icon-facebook"></i>
+            <i class="icon-facebook"></i>
+        </a>
+        <a href="#" class="social-icon si-rounded si-small si-twitter">
+            <i class="icon-twitter"></i>
+            <i class="icon-twitter"></i>
+        </a>
+        <a href="#" class="social-icon si-rounded si-small si-gplus">
+            <i class="icon-gplus"></i>
+            <i class="icon-gplus"></i>
+        </a>
+                *@
+
+                <a class="button button-rounded button-green button-small" asp-page="/store/product" asp-route-storeid="@Model.SecondaryId.ToString()" title="@Model.Name">Open Store</a>
+                <a class="button button-rounded button-aqua button-small" asp-page="/store/detail" asp-route-storeid="@Model.SecondaryId.ToString()" title="@Model.Name">Store Detail</a>
+
+            </div>
+        </div>
+
+
+
+
+        @*</div>*@
+
+        <!--
+         <div class="card">
+            <img class="card-img-top" src="@Model.PictureUri" alt="@Model.Name">
+            <div class="card-body">
+                <h5 class="card-title">@Model.Name</h5>
+                <p class="card-text">@Model.City</p>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-success">Company</li>
+                    <li class="list-group-item list-group-item-success">Location</li>
+                    <li class="list-group-item list-group-item-success">Duration</li>
+                    <li class="list-group-item list-group-item-success">Cost</li>
+                </ul>
+                <a class="btn btn-success" asp-page="/store/product" asp-route-id="@Model.SecondaryId.ToString()" title="@Model.Name">Open Store</a>
+                <a class="btn btn-danger float-right" asp-page="/store/detail" asp-route-id="@Model.Id.ToString()" title="@Model.Name">Store Detail</a>
+                <div class="card-footer">
+                    <p class="card-text"><small class="text-muted">License: @Model.License</small></p>
+                </div>
+            </div>
+        </div>
+            -->
+    </form>

@@ -1,0 +1,273 @@
+﻿@page "{handler?}"
+@model IndexModel
+@{ ViewData["Title"] = "Basket"; }
+
+
+<section id="page-title">
+
+    <div class="container clearfix">
+        <h1>Cart</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Shop</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Cart</li>
+        </ol>
+    </div>
+
+</section><!-- #page-title end -->
+<!-- Content
+============================================= -->
+<section id="content">
+
+    <div class="content-wrap">
+
+        <div class="container clearfix">
+            <form class="table-responsive" method="post">
+                <table class="table cart">
+                    <thead>
+                        <tr>
+                            <th class="cart-product-remove">&nbsp;</th>
+                            <th class="cart-product-thumbnail">&nbsp;</th>
+                            <th class="cart-product-name">Product</th>
+                            <th class="cart-product-price">Unit Price</th>
+                            <th class="cart-product-quantity">Quantity</th>
+                            <th class="cart-product-subtotal">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.BasketModel.Items.Any())
+                        {
+                    @for (int i = 0; i < Model.BasketModel.Items.Count; i++)
+                    {
+                        var item = Model.BasketModel.Items[i];
+                    <tr class="cart_item">
+                        <td class="cart-product-remove">
+                            <a class="remove" title="Remove this item"
+                               asp-page="/basket/index" asp-page-handler="deleteitem" asp-route-id="@item.SecondaryId">
+                                <i class="icon-trash2"></i>
+                            </a>
+
+                        </td>
+
+                        <td class="cart-product-thumbnail">
+                            <a href="#"><img width="64" height="64" src="@item.PictureUrl" alt="@item.ProductName"></a>
+                        </td>
+
+                        <td class="cart-product-name">
+                            <a href="#">@item.ProductName</a>
+                        </td>
+
+                        <td class="cart-product-price">
+                            <span class="amount">$@item.UnitPrice.ToString("N2")</span>
+                        </td>
+
+                        <td class="cart-product-quantity">
+                            <div class="quantity clearfix">
+                                <input type="button" value="-" class="minus">
+                                <input type="text" name="@("Items[" + i + "].Value")" value="@item.Quantity" class="qty" />
+                                <input type="button" value="+" class="plus">
+                                <input type="hidden" name="@("Items[" + i + "].Key")" value="@item.SecondaryId" />
+                            </div>
+                        </td>
+
+                        <td class="cart-product-subtotal">
+                            <span class="amount">$@Math.Round(item.Quantity * item.UnitPrice, 2).ToString("N2")</span>
+                        </td>
+                    </tr>
+}}
+                    <tr class="cart_item">
+                        <td colspan="4">
+                            <div class="row clearfix">
+                                <div class="col-lg-8 col-8 nopadding">
+                                    <button class="button button-3d nomargin fright" name="updatebutton" value="" type="submit"
+                                            asp-page-handler="Update">
+                                        Update Cart
+                                    </button>
+                                    <a asp-page="/basket/checkout" class="button button-3d notopmargin fright">Proceed to Checkout</a>
+                                </div>
+                                <div class="col-lg-4 col-4 nopadding">
+
+                                </div>
+                            </div>
+                        </td>
+                        <td class="cart-product-quantity">
+                            <strong>Total:</strong>
+                        </td>
+                        <td class="cart-product-subtotal">
+                            <span class="amount color lead"><strong>$@Model.BasketModel.Total().ToString("N2")</strong></span>
+                        </td>
+                    </tr>
+                        <tr class="cart_item">
+                            <td colspan="6">
+                                
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+
+            <div class="row clearfix">
+                <div class="col-lg-12 clearfix">
+                    <h4>Delivery Address</h4>    
+                    <form method="post" enctype="multipart/form-data">
+                        <div class="col_one_third">
+                            <label asp-for="@Model.AddressInfo.State"></label>
+                            <select asp-for="@Model.AddressInfo.State" class="form-control">
+                                <option value="CA">CA</option>
+                            </select>
+                        </div>
+                        <div class="col_one_third">
+                            <label asp-for="@Model.AddressInfo.City"></label>
+                            <select asp-for="@Model.AddressInfo.City" asp-items="@Model.CityList" class="form-control">
+                                <option value="">Choose City</option>
+                            </select>
+                        </div>
+                        <div class="col_one_third col_last">
+                            <label asp-for="@Model.AddressInfo.ZipCode"></label>
+                            <input asp-for="@Model.AddressInfo.ZipCode" type="text" class="sm-form-control" placeholder="ZipCode" />
+                            <span asp-validation-for="@Model.AddressInfo.ZipCode" class="text-danger"></span>
+                        </div>
+                        <div class="col_half">
+                            <label asp-for="@Model.AddressInfo.Address"></label>
+                            <input asp-for="@Model.AddressInfo.Address" type="text" class="sm-form-control" placeholder="Address" />
+                            <span asp-validation-for="@Model.AddressInfo.Address" class="text-danger"></span>
+                        </div>
+                        <div class="col_half col_last">
+                            <label asp-for="@Model.AddressInfo.Birthdate"></label>
+                            <input asp-for="@Model.AddressInfo.Birthdate" type="text" class="sm-form-control" placeholder="BirthDate" />
+                            <span asp-validation-for="@Model.AddressInfo.Birthdate" class="text-danger"></span>
+                        </div>
+                        <div class="col_one_third">
+                            <label asp-for="@Model.AddressInfo.PhoneNumber"></label>
+                            <input asp-for="@Model.AddressInfo.PhoneNumber" type="text" class="sm-form-control" placeholder="PhoneNumber" />
+                            <span asp-validation-for="@Model.AddressInfo.PhoneNumber" class="text-danger"></span>
+                        </div>
+                        <div class="col_one_third">
+                            <label asp-for="@Model.AddressInfo.IDCard"></label>
+                            <input asp-for="@Model.AddressInfo.IDCard" type="file" class="sm-form-control" placeholder="Upload ID Card" />
+                            <span asp-validation-for="@Model.AddressInfo.IDCard" class="text-danger"></span>
+                        </div>
+                        <div class="col_one_third col_last">
+                            <label asp-for="@Model.AddressInfo.Email"></label>
+                            <input asp-for="@Model.AddressInfo.Email" type="text" class="sm-form-control" placeholder="Email" />
+                            <span asp-validation-for="@Model.AddressInfo.Email" class="text-danger"></span>
+                        </div>
+                        <div>
+                            <input asp-for="@Model.AddressInfo.Agreement" class="checkbox-style" type="checkbox">
+                            <label asp-for="@Model.AddressInfo.Agreement" class="checkbox-style-1-label checkbox-small">Accept Ageement</label>
+                        </div>
+                        <button class="button button-3d nomargin fright" name="checkoutbutton" value="" type="submit"
+                                asp-page-handler="CheckoutProceed">
+                            Proceed Checkout
+                        </button>
+                        <input type="submit" asp-page="Checkout"
+                               class="btn esh-basket-checkout"
+                               value="[ Checkout ]" name="action" />
+
+                    </form>
+                </div>
+
+                
+            </div>
+
+        </div>
+
+    </div>
+
+</section><!-- #content end -->
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+@*
+    <section class="esh-catalog-hero">
+        <div class="container">
+            <img class="esh-catalog-title" src="~/images/main_banner_text.png" />
+        </div>
+    </section>
+
+    <div class="container">
+
+        @if (Model.BasketModel.Items.Any())
+        {
+            <form method="post">
+                <article class="esh-basket-titles row">
+                    <br />
+                    <section class="esh-basket-title col-xs-3">Product</section>
+                    <section class="esh-basket-title col-xs-3 hidden-lg-down"></section>
+                    <section class="esh-basket-title col-xs-2">Price</section>
+                    <section class="esh-basket-title col-xs-2">Quantity</section>
+                    <section class="esh-basket-title col-xs-2">Cost</section>
+                </article>
+                <div class="esh-catalog-items row">
+                    @for (int i = 0; i < Model.BasketModel.Items.Count; i++)
+                    {
+                        var item = Model.BasketModel.Items[i];
+                        <article class="esh-basket-items row">
+                            <div>
+                                <section class="esh-basket-item esh-basket-item--middle col-lg-3 hidden-lg-down">
+                                    <img class="esh-basket-image" src="@item.PictureUrl" />
+                                </section>
+                                <section class="esh-basket-item esh-basket-item--middle col-xs-3">@item.ProductName</section>
+                                <section class="esh-basket-item esh-basket-item--middle col-xs-2">$ @item.UnitPrice.ToString("N2")</section>
+                                <section class="esh-basket-item esh-basket-item--middle col-xs-2">
+                                    <input type="hidden" name="@("Items[" + i + "].Key")" value="@item.SecondaryId" />
+                                    <input type="number" class="esh-basket-input" min="0" name="@("Items[" + i + "].Value")" value="@item.Quantity" />
+                                </section>
+                                <section class="esh-basket-item esh-basket-item--middle esh-basket-item--mark col-xs-2">$ @Math.Round(item.Quantity * item.UnitPrice, 2).ToString("N2")</section>
+                            </div>
+                            <div class="row">
+
+                            </div>
+                        </article>
+                    }
+
+                    <div class="container">
+                        <article class="esh-basket-titles esh-basket-titles--clean row">
+                            <section class="esh-basket-title col-xs-10"></section>
+                            <section class="esh-basket-title col-xs-2">Total</section>
+                        </article>
+
+                        <article class="esh-basket-items row">
+                            <section class="esh-basket-item col-xs-10"></section>
+                            <section class="esh-basket-item esh-basket-item--mark col-xs-2">$ @Model.BasketModel.Total().ToString("N2")</section>
+                        </article>
+
+                        <article class="esh-basket-items row">
+                            <section class="esh-basket-item col-xs-7"></section>
+                            <section class="esh-basket-item col-xs-2">
+                                <button class="btn esh-basket-checkout" name="name" value="" type="submit">[ Update ]</button>
+                            </section>
+                        </article>
+                    </div>
+                    <div class="row">
+                        <section class="esh-basket-item col-xs-1">
+                            <a asp-page="/Index" class="btn esh-basket-checkout text-white">[ Continue Shopping..]</a>
+                        </section>
+                        <section class="esh-basket-item col-xs-push-7 col-xs-4">
+
+                            <button class="btn esh-basket-checkout" name="updatebutton" value="" type="submit"
+                                    asp-page-handler="Update">
+                                [ Update ]
+                            </button>
+                            <input type="submit" asp-page="Checkout"
+                                   class="btn esh-basket-checkout"
+                                   value="[ Checkout ]" name="action" />
+                        </section>
+                    </div>
+                </div>
+            </form>
+        }
+        else
+        {
+            <h3 class="esh-catalog-items row">
+                Basket is empty.
+            </h3>
+
+            <section class="esh-basket-item">
+                <a asp-page="/Index" class="btn esh-basket-checkout text-white">[ Continue Shopping..]</a>
+            </section>
+        }
+    </div>
+*@

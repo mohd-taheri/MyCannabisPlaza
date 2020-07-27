@@ -1,0 +1,113 @@
+﻿@page
+@model Microsoft.eShopWeb.Web.Pages.Store.IndexModel
+@{
+    ViewData["Title"] = "Store";
+}
+
+
+<!-- Page Title
+           ============================================= -->
+<section id="page-title">
+
+    <div class="container clearfix">
+        <h1>Dispenceries</h1>
+        <span>List of Dispenceries</span>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Shortcodes</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Team</li>
+        </ol>
+    </div>
+
+</section><!-- #page-title end -->
+
+<!-- Content
+    ============================================= -->
+<section id="content">
+
+    <div class="content-wrap">
+
+        <div class="container clearfix">
+
+            <form method="get">
+                <div class="form-group mx-sm-3 mb-2 center">
+                    <input type="text" class="form-control-sm" name="zipcode" placeholder="Enter Your ZipCode">
+                    <button class="button button-mini"><i class="icon-search"></i>Search</button>
+                </div>
+            </form>
+
+            <div class="clear"></div>
+
+            <div class="fancy-title title-border">
+                <h3>List Layout</h3>
+            </div>
+
+            <div class="row">
+                @if (Model.StoreModel.StoreItems.Any())
+                {
+
+                    @foreach (var storeItem in Model.StoreModel.StoreItems)
+                    {
+
+                        <partial name="_store" for="@storeItem" />
+
+                    }
+
+                }
+                else
+                {
+                    <div>
+                        THERE ARE NO RESULTS THAT MATCH YOUR SEARCH
+                    </div>
+                }
+
+            </div>
+
+            <div class="clear"></div>
+
+        </div>
+
+    </div>
+
+</section><!-- #content end -->
+@*
+    <section class="esh-catalog-hero">
+        <div class="container">
+            <img class="esh-catalog-title" src="~/images/main_banner_text.png" />
+            <div class="wrap">
+                <div class="search">
+                    <input type="text" class="searchTerm" placeholder="What are you looking for?">
+                    <button type="submit" class="searchButton">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="esh-catalog-filters">
+    </section>
+    <div class="container">
+        @if (Model.StoreModel.StoreItems.Any())
+        {
+
+            <div class="esh-catalog-items row">
+                @foreach (var storeItem in Model.StoreModel.StoreItems)
+                {
+                    <div class="esh-catalog-item col-md-4">
+                        <!--<div class="esh-catalog-item col-md-4"> -->
+
+                        <partial name="_store" for="@storeItem" />
+
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="esh-catalog-items row">
+                THERE ARE NO RESULTS THAT MATCH YOUR SEARCH
+            </div>
+        }
+
+    </div>
+*@
